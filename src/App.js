@@ -58,7 +58,6 @@ function App() {
     const [account] = await window.ethereum.request({method: "eth_requestAccounts"})
     //console.log("Accounts: ",account))~~~~~~~~~~~~
     setAccount(account)
-    console.log(account)
     //Connect to provider and getNetwork
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     setProvider(provider)
@@ -91,13 +90,13 @@ function App() {
     )
     let tx = await roll.wait()
     //console.log(tx)
-    console.log("TX:",tx)
-    console.log("HASH",tx.transactionHash)
+    //console.log("TX:",tx)
+    //console.log("HASH",tx.transactionHash)
     setTxHash(tx.transactionHash)
 
     //get value from tx
     let requestId = tx.logs[3].data
-    console.log("ID:",requestId)
+    //console.log("ID:",requestId)
     setCurrentRequestId(requestId)
     getStatus(requestId)
     await wait()
@@ -155,7 +154,7 @@ function App() {
   }
 
   async function handleView(){
-    console.log("CLICK HANDLE VIEW",txHash)
+    //console.log("CLICK HANDLE VIEW",txHash)
     window.open(`https://goerli.etherscan.io/tx/${txHash}`, '_blank').focus();
   }
 
