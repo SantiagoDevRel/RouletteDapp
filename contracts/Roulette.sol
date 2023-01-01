@@ -13,6 +13,7 @@ contract Roulette is VRFV2WrapperConsumerBase {
 
     event RouletteRolled(uint256 requestId);
     event RouletteResult(uint256 requestId, bool userWin);
+    event TransferWinner(address player, uint256 amount);
 
     enum RouletteColor {
         Black, //uint8 = 0
@@ -22,7 +23,7 @@ contract Roulette is VRFV2WrapperConsumerBase {
     struct RouletteRollStatus {
         uint256 fees;
         uint256 randomWord;
-        address player;
+        address payable player;
         bool userWin;
         bool fulfilled;
         RouletteColor color;
@@ -46,7 +47,7 @@ contract Roulette is VRFV2WrapperConsumerBase {
         statuses[requestId] = RouletteRollStatus(
             VRF_V2_WRAPPER.calculateRequestPrice(callbackGasLimit),
             0,
-            msg.sender,
+            payable(msg.sender),
             false,
             false,
             _color // 0(black) or 1(red)
@@ -72,6 +73,7 @@ contract Roulette is VRFV2WrapperConsumerBase {
         if (statuses[_requestId].color == result) {
             statuses[_requestId].userWin = true;
             payable(statuses[_requestId].player).transfer(entryFees * 2);
+            emit TransferWinner(statuses[_requestId].player, entryFees * 2);
         }
 
         emit RouletteResult(_requestId, statuses[_requestId].userWin);

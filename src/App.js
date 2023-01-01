@@ -1,11 +1,11 @@
 import {ethers} from "ethers"
-import {useEffect, useState, useRef} from "react"
+import {useEffect, useState} from "react"
 import Request from "./Request";
 import './App.css';
 import rouletteJson from "./artifacts/contracts/Roulette.sol/Roulette.json"
 import Header from "./Header";
 
-const rouletteAddress = "0xc8Ee51B5C546c03af73c3D7AcaFCAb24B784910F"
+const rouletteAddress = "0xfd388a1a0C2F89A7be83792c060e3DCFE8e5FeF8"
 
 function App() {
   const [account, setAccount] = useState(undefined)
